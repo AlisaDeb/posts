@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const Registration = () => <>Page Register</>;
+export const RegistrationPage = () => <>Page Register</>;
