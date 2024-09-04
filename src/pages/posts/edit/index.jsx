@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const EditPost = () => {
+export const EditPostPage = () => {
   return <div>Это страница редактирования поста</div>;
 };
