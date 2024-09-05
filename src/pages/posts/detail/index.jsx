@@ -1,28 +1,30 @@
-import React, { useMemo } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Container } from '../../../components/Container';
 import { Link } from '../../../components/Link';
 import { Typo } from '../../../components/Typo';
-import { INITIAL_POSTS } from '../index';
+import { getPost, selectPostForView } from '../../../redux/slices/postSlice';
 import * as SC from './styles';
 
 export const DetailPostPage = () => {
   const { id } = useParams();
+  const postForView = useSelector(selectPostForView);
+  const dispatch = useDispatch();
 
-  const currentPost = useMemo(
-    () => INITIAL_POSTS.find((item) => item.id === Number(id)),
-    [id]
-  );
+  useEffect(() => {
+    dispatch(getPost(Number(id)));
+  }, [id, dispatch]);
 
-  if (!currentPost) {
+  if (!postForView) {
     return <>Пост не найден</>;
   }
 
   return (
     <Container>
-      <Typo>{currentPost.title}</Typo>
-      <SC.Image src={currentPost.image} alt={currentPost.title} />
-      <SC.Text>{currentPost.text}</SC.Text>
+      <Typo>{postForView.title}</Typo>
+      <SC.Image src={postForView.image} alt={postForView.title} />
+      <SC.Text>{postForView.text}</SC.Text>
       {/* после флоат возвращает поток данных в правилньое направление */}
       <div style={{ clear: 'both' }} />
       <SC.LinkWrapper>
