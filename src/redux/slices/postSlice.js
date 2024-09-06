@@ -1,74 +1,106 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { postsAPI } from '../../api/postsAPI';
 
 const initialState = {
-  list: [
-    {
-      id: 5,
-      title: 'Post 5',
-      image:
-        'https://gdb.voanews.com/3a322c39-beb7-4d60-acc7-03096fdbacce_w408_s.jpg',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque assumenda minima adipisci aliquid cum. Ut fugiat necessitatibus, tempora quos atque consequuntur minus architecto, labore voluptatum cupiditate, sequi expedita quis praesentium?',
-    },
-    {
-      id: 4,
-      title: 'Post 4',
-      image:
-        'https://gdb.voanews.com/3a322c39-beb7-4d60-acc7-03096fdbacce_w408_s.jpg',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque assumenda minima adipisci aliquid cum. Ut fugiat necessitatibus, tempora quos atque consequuntur minus architecto, labore voluptatum cupiditate, sequi expedita quis praesentium?',
-    },
-    {
-      id: 3,
-      title: 'Post 3',
-      image:
-        'https://gdb.voanews.com/3a322c39-beb7-4d60-acc7-03096fdbacce_w408_s.jpg',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque assumenda minima adipisci aliquid cum. Ut fugiat necessitatibus, tempora quos atque consequuntur minus architecto, labore voluptatum cupiditate, sequi expedita quis praesentium?',
-    },
-    {
-      id: 2,
-      title: 'Post 2',
-      image:
-        'https://gdb.voanews.com/3a322c39-beb7-4d60-acc7-03096fdbacce_w408_s.jpg',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque assumenda minima adipisci aliquid cum. Ut fugiat necessitatibus, tempora quos atque consequuntur minus architecto, labore voluptatum cupiditate, sequi expedita quis praesentium?',
-    },
-    {
-      id: 1,
-      title: 'Post 1',
-      image:
-        'https://gdb.voanews.com/3a322c39-beb7-4d60-acc7-03096fdbacce_w408_s.jpg',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque assumenda minima adipisci aliquid cum. Ut fugiat necessitatibus, tempora quos atque consequuntur minus architecto, labore voluptatum cupiditate, sequi expedita quis praesentium?',
-    },
-  ],
-  postForView: null,
-  freshPosts: null,
+  posts: {
+    list: null,
+    loading: false,
+  },
+  postForView: {
+    post: null,
+    loading: false,
+  },
+  freshPosts: {
+    posts: null,
+    loading: false,
+  },
 };
+
+export const getPostById = createAsyncThunk(
+  'posts/fetchById',
+  async (postId) => {
+    return await postsAPI.fetchById(postId);
+  }
+);
+
+export const getPosts = createAsyncThunk('posts/fetchPosts', async () => {
+  return await postsAPI.fetchPosts();
+});
+
+export const getFreshPosts = createAsyncThunk(
+  'posts/fetchFreshPosts',
+  async (limit) => {
+    return await postsAPI.fetchFreshPosts(limit);
+  }
+);
 
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    setPosts: (state, action) => {
-      state.list = action.payload;
-    },
     editPost: (state, action) => {
       //editPost
     },
-    getPost: (state, action) => {
-      state.postForView = state.list.find((item) => item.id === action.payload);
-    },
-    getFreshPosts: (state) => {
-      state.freshPosts = state.list.slice(0, 3);
-    },
     addPost: (state, action) => {
-      // add new post by data
+      const newPost = { ...action.payload };
+
+      newPost.id = new Date().getTime();
+      state.posts.list = state.posts.list
+        ? [newPost, ...state.posts.list]
+        : [newPost];
     },
+    showPost: (state, action) => {
+      state.postForView = {
+        post: action.payload,
+        loading: false,
+      };
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(getPostById.pending, (state, action) => {
+      state.postForView = {
+        post: null,
+        loading: true,
+      };
+    });
+    builder.addCase(getPostById.fulfilled, (state, action) => {
+      state.postForView = {
+        post: action.payload,
+        loading: false,
+      };
+    });
+
+    builder.addCase(getPosts.pending, (state) => {
+      state.posts = {
+        list: null,
+        loading: true,
+      };
+    });
+    builder.addCase(getPosts.fulfilled, (state, action) => {
+      state.posts = {
+        list: action.payload,
+        loading: false,
+      };
+    });
+
+    builder.addCase(getFreshPosts.pending, (state) => {
+      state.freshPosts = {
+        posts: null,
+        loading: true,
+      };
+    });
+    builder.addCase(getFreshPosts.fulfilled, (state, action) => {
+      state.freshPosts = {
+        posts: action.payload,
+        loading: false,
+      };
+    });
   },
 });
 
-export const { setPosts, editPost, getPost, getFreshPosts, addPost } =
-  postsSlice.actions;
+export const { editPost, addPost, showPost } = postsSlice.actions;
 
-export const selectPosts = (state) => state.posts.list;
 export const selectPostForView = (state) => state.posts.postForView;
-export const selectFreshPosts = (state) => state.posts.freshPosts;
 
 export default postsSlice.reducer;
