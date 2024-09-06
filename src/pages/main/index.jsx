@@ -3,17 +3,13 @@ import { Posts } from '../../components/Posts';
 import { Container } from '../../components/Container';
 import { Typo } from '../../components/Typo';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getFreshPosts,
-  selectFreshPosts,
-  selectPostForView,
-} from '../../redux/slices/postSlice';
+import { getFreshPosts, selectPostForView } from '../../redux/slices/postSlice';
 
 export const MainPage = () => {
   const dispatch = useDispatch();
 
-  const postForView = useSelector(selectPostForView);
-  const freshPosts = useSelector(selectFreshPosts);
+  const { post } = useSelector(selectPostForView);
+  const { posts, loading } = useSelector((state) => state.posts.freshPosts);
 
   useEffect(() => {
     dispatch(getFreshPosts());
@@ -22,16 +18,17 @@ export const MainPage = () => {
   return (
     <>
       <Container>
-        {freshPosts && (
+        {loading && <>Loading...</>}
+        {posts && (
           <>
             <Typo>Свежие публикации</Typo>
-            <Posts posts={freshPosts} />
+            <Posts posts={posts} />
           </>
         )}
-        {postForView && (
+        {post && (
           <>
             <Typo>Последний просмотренный пост</Typo>
-            <Posts posts={[postForView]} />
+            <Posts posts={[post]} />
           </>
         )}
       </Container>
