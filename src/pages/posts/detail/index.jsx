@@ -4,17 +4,13 @@ import { useParams } from 'react-router-dom';
 import { Container } from '../../../components/Container';
 import { Link } from '../../../components/Link';
 import { Typo } from '../../../components/Typo';
-import {
-  getPostById,
-  selectPostForView,
-  showPost,
-} from '../../../redux/slices/postSlice';
+import { getPostById, showPost } from '../../../redux/slices/postSlice';
 import * as SC from './styles';
 
 export const DetailPostPage = () => {
   const { id } = useParams();
   const { list } = useSelector((state) => state.posts.posts);
-  const postForView = useSelector(selectPostForView);
+  const postForView = useSelector((state) => state.posts.postForView);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,6 +49,7 @@ export const DetailPostPage = () => {
       <div style={{ clear: 'both' }} />
       <SC.LinkWrapper>
         <Link to={'/posts'}>Обратно к публикациям</Link>
+        <Link to={`/posts/${id}/edit`}>Редактировать</Link>
       </SC.LinkWrapper>
     </Container>
   );
