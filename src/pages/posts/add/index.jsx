@@ -1,6 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addPost } from '../../../redux/slices/postSlice';
 import { PostForm } from '../components/PostForm';
 
 export const AddPostPage = () => {
-  return <PostForm />;
+  const dispatch = useDispatch();
+
+  const onSubmitForm = (formValues) => {
+    dispatch(addPost(formValues));
+  };
+
+  return (
+    <PostForm title={'Добавление нового поста'} onSubmitForm={onSubmitForm} />
+  );
 };

@@ -3,12 +3,13 @@ import { Posts } from '../../components/Posts';
 import { Container } from '../../components/Container';
 import { Typo } from '../../components/Typo';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFreshPosts, selectPostForView } from '../../redux/slices/postSlice';
+import { getFreshPosts } from '../../redux/slices/postSlice';
 
 export const MainPage = () => {
   const dispatch = useDispatch();
 
-  const { post } = useSelector(selectPostForView);
+  const { post } = useSelector((state) => state.posts.postForView);
+
   const { posts, loading } = useSelector((state) => state.posts.freshPosts);
 
   useEffect(() => {
