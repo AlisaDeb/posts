@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Container } from '../Container';
+import { Container } from '../UI/Container';
 //чтобы отличать компоненты от styled-components используем запись SC
 import * as SC from './styles';
 

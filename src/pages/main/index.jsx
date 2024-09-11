@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Posts } from '../../components/Posts';
-import { Container } from '../../components/Container';
-import { Typo } from '../../components/Typo';
+import { Container } from '../../components/UI/Container';
+import { Typo } from '../../components/UI/Typo';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFreshPosts } from '../../redux/slices/postSlice';
 
