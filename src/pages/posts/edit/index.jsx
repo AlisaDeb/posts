@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { editPost, getPostById } from '../../../redux/slices/postSlice';
+import { editPost } from '../../../redux/slices/postSlice';
 import { PostForm } from '../components/PostForm';
 
 export const EditPostPage = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '../../../Link';
+import { Link } from '../../../UI/Link';
 import * as SC from './styles';
 
 export const Post = ({ post }) => {
