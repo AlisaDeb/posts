@@ -4,6 +4,7 @@ import { Container } from '../../components/UI/Container';
 import { Posts } from '../../components/Posts';
 import { Typo } from '../../components/UI/Typo';
 import { getPosts } from '../../redux/slices/postSlice';
+import { Spinner } from '../../components/UI/Spinner';
 
 export const PostsPage = () => {
   const { list, loading } = useSelector((state) => state.posts.posts);
@@ -16,7 +17,7 @@ export const PostsPage = () => {
   }, [list, dispatch]);
 
   if (!list && loading) {
-    return <Container>Loading...</Container>;
+    return <Spinner />;
   }
 
   if (!list) {

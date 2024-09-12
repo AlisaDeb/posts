@@ -4,6 +4,7 @@ import { Container } from '../../components/UI/Container';
 import { Typo } from '../../components/UI/Typo';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFreshPosts } from '../../redux/slices/postSlice';
+import { Spinner } from '../../components/UI/Spinner';
 
 export const MainPage = () => {
   const dispatch = useDispatch();
@@ -19,17 +20,22 @@ export const MainPage = () => {
   return (
     <>
       <Container>
-        {loading && <>Loading...</>}
-        {posts && (
+        {loading ? (
+          <Spinner />
+        ) : (
           <>
-            <Typo>Свежие публикации</Typo>
-            <Posts posts={posts} />
-          </>
-        )}
-        {post && (
-          <>
-            <Typo>Последний просмотренный пост</Typo>
-            <Posts posts={[post]} />
+            {posts && (
+              <>
+                <Typo>Свежие публикации</Typo>
+                <Posts posts={posts} />
+              </>
+            )}
+            {post && (
+              <>
+                <Typo>Последний просмотренный пост</Typo>
+                <Posts posts={[post]} />
+              </>
+            )}
           </>
         )}
       </Container>
