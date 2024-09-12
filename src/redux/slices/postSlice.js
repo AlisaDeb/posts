@@ -65,6 +65,10 @@ export const postsSlice = createSlice({
         (post) => post.id !== action.payload.id
       );
 
+      state.freshPosts.posts = state.freshPosts.posts.filter(
+        (post) => post.id !== action.payload.id
+      );
+
       state.postForView = {
         post: null,
         loading: false,

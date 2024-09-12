@@ -10,12 +10,13 @@ export const MainPage = () => {
   const dispatch = useDispatch();
 
   const { post } = useSelector((state) => state.posts.postForView);
-
   const { posts, loading } = useSelector((state) => state.posts.freshPosts);
 
   useEffect(() => {
-    dispatch(getFreshPosts());
-  }, [dispatch]);
+    if (!posts) {
+      dispatch(getFreshPosts());
+    }
+  }, [posts, dispatch]);
 
   return (
     <>
@@ -24,11 +25,13 @@ export const MainPage = () => {
           <Spinner />
         ) : (
           <>
-            {posts && (
+            {posts && posts.length > 0 ? (
               <>
                 <Typo>Свежие публикации</Typo>
                 <Posts posts={posts} />
               </>
+            ) : (
+              <Typo>Нет свежих публикаций к показу</Typo>
             )}
             {post && (
               <>
