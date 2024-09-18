@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { Button } from '../UI/Button';
 
 export const Menu = styled.div`
   display: flex;
@@ -21,5 +22,18 @@ export const MenuItem = styled(NavLink)`
 
   &:hover {
     text-decoration: underline;
+  }
+`;
+
+export const ExitButton = styled(Button)`
+  border: none;
+  background-color: #d81053;
+  color: white;
+  padding: 6px 25px;
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1;
+    transform: scale(1.04);
   }
 `;

@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container } from '../../../components/UI/Container';
 import { Link } from '../../../components/UI/Link';
+import { Modal } from '../../../components/UI/Modal';
+import { ModalContent } from '../../../components/UI/ModalContent';
+import { ModalText } from '../../../components/UI/ModalText';
 import { Typo } from '../../../components/UI/Typo';
 import {
   deletePost,
@@ -61,16 +64,18 @@ export const DetailPostPage = () => {
     <Container>
       {postForDelete && (
         <SC.ModalWrapper>
-          <SC.Modal>
-            <SC.ModalText>
+          <Modal>
+            <ModalText>
               Вы точно уверены, что хотите удалить публикацию c ID -
               {postForDelete.id}?
-            </SC.ModalText>
-            <SC.ModalContent>
+            </ModalText>
+            <ModalContent>
               <SC.DeleteButton onClick={onDeletePost}>Да</SC.DeleteButton>
-              <button onClick={() => setPostForDelete(null)}>Нет</button>
-            </SC.ModalContent>
-          </SC.Modal>
+              <SC.CancelButton onClick={() => setPostForDelete(null)}>
+                Нет
+              </SC.CancelButton>
+            </ModalContent>
+          </Modal>
         </SC.ModalWrapper>
       )}
       <Typo>{post.title}</Typo>

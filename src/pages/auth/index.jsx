@@ -7,6 +7,7 @@ import { Form } from '../../components/UI/Form';
 import { Input } from '../../components/UI/Input';
 import { Typo } from '../../components/UI/Typo';
 import { login } from '../../redux/slices/authSlice';
+import * as SC from './styles';
 
 export const AuthPage = () => {
   const [formValues, setFormValues] = useState({
@@ -73,9 +74,9 @@ export const AuthPage = () => {
             onChange={(e) => onChange(e.target.name, e.target.value)}
           />
         </Field>
-        <button type="submit" disabled={disabled}>
+        <SC.AuthButton type="submit" disabled={disabled}>
           Авторизация
-        </button>
+        </SC.AuthButton>
       </Form>
     </Container>
   );
