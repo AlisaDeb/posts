@@ -27,7 +27,9 @@ export const Root = () => {
           )}{' '}
           {!user && <SC.MenuItem to={'/auth'}>Авторизация</SC.MenuItem>}{' '}
           {!user && <SC.MenuItem to={'/registration'}>Регистрация</SC.MenuItem>}{' '}
-          {user && <button onClick={onClickExitBtn}>Выход</button>}
+          {user && (
+            <SC.ExitButton onClick={onClickExitBtn}>Выход</SC.ExitButton>
+          )}
         </SC.Menu>
       </Container>
       <Outlet />

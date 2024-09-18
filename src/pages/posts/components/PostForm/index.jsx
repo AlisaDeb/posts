@@ -46,9 +46,9 @@ export const PostForm = ({ title, onSubmitForm, defaultValues }) => {
             onChange={(e) => onChange(e.target.name, e.target.value)}
           />
         </Field>
-        <SC.Button type="submit" disabled={disabled}>
+        <SC.SaveButton type="submit" disabled={disabled}>
           Сохранить
-        </SC.Button>
+        </SC.SaveButton>
       </Form>
     </Container>
   );

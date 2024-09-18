@@ -5,6 +5,7 @@ import { Form } from '../../components/UI/Form';
 import { Field } from '../../components/UI/Field';
 import { Input } from '../../components/UI/Input';
 import { useNavigate } from 'react-router-dom';
+import * as SC from './styles';
 
 export const RegistrationPage = () => {
   const [formValues, setFormValues] = useState({
@@ -89,9 +90,9 @@ export const RegistrationPage = () => {
             onChange={(e) => onChange(e.target.name, e.target.value)}
           />
         </Field>
-        <button type="submit" disabled={disabled}>
+        <SC.RegistrButton type="submit" disabled={disabled}>
           Регистрация
-        </button>
+        </SC.RegistrButton>
       </Form>
     </Container>
   );

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from '../../../../components/UI/Button';
 
 export const Textarea = styled.textarea`
   width: 100%;
@@ -6,14 +7,11 @@ export const Textarea = styled.textarea`
   outline: none;
 `;
 
-export const Button = styled.button`
+export const SaveButton = styled(Button)`
   border: none;
-  background: #d81053;
+  background-color: #d81053;
   color: white;
   padding: 10px 0;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.3s ease, opacity 0.3s ease;
 
   &:hover {
     opacity: 0.6;
