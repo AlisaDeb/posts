@@ -17,3 +17,7 @@ export const Title = styled.div`
   font-size: 24px;
   font-weight: bold;
 `;
+
+export const Hightlight = styled.span`
+  color: #f97b7b;
+`;
