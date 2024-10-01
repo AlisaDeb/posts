@@ -14,10 +14,58 @@ export const RegistrationPage = () => {
     email: '',
     password: '',
   });
+  const [error, setError] = useState({
+    email: '',
+    password: '',
+  });
   const navigate = useNavigate();
+
+  const validEmail = (email) => {
+    const isValid =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return isValid.test(String(email).toLowerCase());
+  };
+
+  const validPassword = (password) => {
+    if (password.length < 8) {
+      return false;
+    }
+    if (!/\d/.test(password)) {
+      return false;
+    }
+    if (!/[A-Z]/.test(password)) {
+      return false;
+    }
+    if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
+      return false;
+    }
+    return true;
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const newErrors = {};
+
+    if (!validEmail(formValues.email)) {
+      newErrors.email = 'Неверный формат email';
+    }
+    if (!validPassword(formValues.password)) {
+      newErrors.password =
+        'Пароль должен содержать минимум 8 символов, включая цифру, прописную букву и специальный символ';
+    }
+
+    // console.log('Ошибки после валидации:', newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      setError(newErrors);
+      return;
+    }
+
+    setError({
+      email: '',
+      password: '',
+    });
+
     try {
       const users = JSON.parse(localStorage.getItem('users'));
       const userId = Date.now();
@@ -53,7 +101,7 @@ export const RegistrationPage = () => {
   return (
     <Container>
       <Typo>Cтраница регистрации</Typo>
-      <Form onSubmit={onSubmit} autoComplete="off">
+      <Form onSubmit={onSubmit} autoComplete="off" noValidate>
         <Field>
           <Input
             type="text"
@@ -81,6 +129,7 @@ export const RegistrationPage = () => {
             onChange={(e) => onChange(e.target.name, e.target.value)}
           />
         </Field>
+        {error.email && <div>{error.email}</div>}
         <Field>
           <Input
             type="password"
@@ -90,6 +139,7 @@ export const RegistrationPage = () => {
             onChange={(e) => onChange(e.target.name, e.target.value)}
           />
         </Field>
+        {error.password && <div>{error.password}</div>}
         <SC.RegistrButton type="submit" disabled={disabled}>
           Регистрация
         </SC.RegistrButton>

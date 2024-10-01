@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { resetFilter } from '../../../redux/slices/filterSlice';
 import * as SC from './styles';
@@ -9,6 +9,10 @@ export const Filter = ({ handleTitleFilterChange, titleFilter }) => {
   const handleResetFilter = () => {
     dispatch(resetFilter());
   };
+
+  useEffect(() => {
+    dispatch(resetFilter());
+  }, [dispatch]);
 
   return (
     <SC.FilterWrapper>
