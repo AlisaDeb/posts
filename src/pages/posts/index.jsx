@@ -39,10 +39,7 @@ export const PostsPage = () => {
   }
 
   const filteredPosts = list.filter((post) => {
-    const currentSearch = post.title
-      .toLowerCase()
-      .includes(titleFilter.toLowerCase());
-    return currentSearch;
+    return post.title.toLowerCase().includes(titleFilter.toLowerCase());
   });
 
   const sortedPosts = [...filteredPosts].sort((a, b) => {
